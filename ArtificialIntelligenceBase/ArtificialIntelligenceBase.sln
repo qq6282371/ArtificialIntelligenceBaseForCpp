@@ -4,6 +4,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ArtificialIntelligenceBase", "ArtificialIntelligenceBase\ArtificialIntelligenceBase.vcxproj", "{6202E669-EB15-4B47-B2FE-325AC6F6D6F7}"
+	ProjectSection(ProjectDependencies) = postProject
+		{5B74298A-38B8-4D10-BB63-ECB557E31211} = {5B74298A-38B8-4D10-BB63-ECB557E31211}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "gtest", "gtest\gtest.vcxproj", "{5B74298A-38B8-4D10-BB63-ECB557E31211}"
 EndProject

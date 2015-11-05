@@ -81,6 +81,18 @@
     <ClInclude Include="gtest\internal\gtest-type-util.h">
       <Filter>头文件\gtest\internal</Filter>
     </ClInclude>
+    <ClInclude Include="DataBuf.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Parameter.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Result.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="AIString.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
