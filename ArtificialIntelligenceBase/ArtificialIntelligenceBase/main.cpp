@@ -12,18 +12,21 @@ int main(int argc, char**argv, char**env)
 }
 
 TEST(testAIBase, testParam)
-{
+{//参数收纳类，收纳各种参数
 	CParameter param;
-	param << 1 << 1.3f << 9.3 << 'c';
+	param << 1 << 1.3f << 9.3 << 'c'<<AIString("abc");
 	EXPECT_EQ(1, param[0]);
 	EXPECT_EQ(1.3f, param[1]);
 	EXPECT_EQ(9.3, param[2]);
 	EXPECT_EQ('c', param[3]);
-	EXPECT_EQ(4, param.size());
+	EXPECT_EQ(std::string("abc"), param[4]);
+	EXPECT_STREQ("abc", _CV(char*,param[4]));
+	EXPECT_EQ(5, param.size());
+	
 }
 
 TEST(testAIBase, testString)
-{
+{//支持复制、赋值、构造、宽字符多字符自由匹配、自由整合
 	AIString str,str1,str2("cdef");
 	str = "abc";
 	str1 = str;
@@ -43,4 +46,6 @@ TEST(testAIBase, testString)
 	EXPECT_TRUE((std::wstring)str == wstr);
 	str1 = wstr1;
 	EXPECT_TRUE((std::wstring)str1 == wstr1);
+	str1 += wstr1;
+	EXPECT_STREQ("defdef", str1.c_str());
 }

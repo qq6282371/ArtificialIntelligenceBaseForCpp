@@ -8,6 +8,24 @@ class AIString:
 public:
 	AIString() :std::string(){}
 	AIString(const char* str) :std::string(){ assign(str); }
+	AIString(const wchar_t* str) :std::string(){
+		char* tmp = new char[wcslen(str) + 1];
+		if (tmp){
+			memset(tmp, 0, (size() + 1)*sizeof(wchar_t));
+			wcstombs(tmp, str, wcslen(str));
+		}
+		assign(tmp);
+		delete[]tmp;
+	}
+	AIString(const std::wstring& str){
+		char* tmp = new char[str.size() * 3];
+		if (tmp != NULL){
+			memset(tmp, 0, str.size() * 3);
+			wcstombs(tmp, str.c_str(), str.size());
+			assign(tmp);
+			delete[]tmp;
+		}
+	}
 	~AIString(){}
 public:
 	AIString& operator=(const std::string& str){
@@ -29,6 +47,16 @@ public:
 		}
 		return *this;
 	}
+	AIString& operator=(const wchar_t* str){
+		char* tmp = new char[wcslen(str) * 3];
+		if (tmp != NULL){
+			memset(tmp, 0, wcslen(str) * 3);
+			wcstombs(tmp, str, wcslen(str));
+			assign(tmp);
+			delete[]tmp;
+		}
+		return *this;
+	}
 	operator std::wstring()
 	{
 		wchar_t* tmp = new wchar_t[size() + 1];
@@ -39,6 +67,59 @@ public:
 		}
 		std::wstring ret(tmp);
 		delete[]tmp;
+		return ret;
+	}
+	AIString& operator+=(const std::wstring& str){
+		char* tmp = new char[str.size() * 3];
+		if (tmp != NULL){
+			memset(tmp, 0, str.size() * 3);
+			wcstombs(tmp, str.c_str(), str.size());
+			append(tmp);
+			delete[]tmp;
+		}
+		return *this;
+	}
+	AIString& operator+=(const wchar_t* str){
+		char* tmp = new char[wcslen(str) * 3];
+		if (tmp != NULL){
+			memset(tmp, 0, wcslen(str) * 3);
+			wcstombs(tmp, str, wcslen(str));
+			append(tmp);
+			delete[]tmp;
+		}
+		return *this;
+	}
+	AIString& operator+=(const char* str){
+		append(str);
+		return *this;
+	}
+	AIString& operator+=(const std::string& str){
+		append(str);
+		return *this;
+	}
+	AIString& operator+=(const AIString& str){
+		append(str.c_str());
+		return *this;
+	}
+	bool operator==(const AIString& str){
+		if (this == &str)return true;
+		return (compare(str) == 0);
+	}
+	bool operator==(const std::string& str){
+		return (compare(str) == 0);
+	}
+	bool operator==(const char* str){
+		return (compare(str) == 0);
+	}
+	bool operator==(const std::wstring& str){
+		bool ret = false;
+		char* tmp = new char[str.size() * 3];
+		if (tmp != NULL){
+			memset(tmp, 0, str.size() * 3);
+			wcstombs(tmp, str.c_str(), str.size());
+			ret = (compare(tmp)==0);
+			delete[]tmp;
+		}
 		return ret;
 	}
 public:
@@ -89,3 +170,17 @@ public:
 	}
 };
 
+bool operator==(const char* left, const AIString& right)
+{
+	return (right == left);
+}
+
+bool operator==(const std::string& left, const AIString& right)
+{
+	return (right == left);
+}
+
+bool operator==(const std::wstring& left, const AIString& right)
+{
+	return (right == left);
+}
